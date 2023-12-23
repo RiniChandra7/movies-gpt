@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide the horizontal scrollbar, but still allow scrolling */
+body {
+    overflow-x: hidden;
+  }
+  
+  

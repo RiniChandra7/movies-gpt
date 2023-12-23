@@ -9,3 +9,7 @@ export const TMDB_API_OPTIONS = {
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NzNiMDNkYWUyNWNhOWUzMWQ1ZTJkMGIxODExYmM2OSIsInN1YiI6IjY1N2UwYTMyZjFiNTcxMDhkMGFkMTI2MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Bs5O67qNEii3ZL4of0BUYy0eKIxd_tQvW5tv9blyrcs'
     }
   };
+
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const MOVIE_BG_URL = 'https://assets.nflxext.com/ffe/siteui/vlv3/b4c7f092-0488-48b7-854d-ca055a84fb4f/5b22968d-b94f-44ec-bea3-45dcf457f29e/IN-en-20231204-popsignuptwoweeks-perspective_alpha_website_small.jpg';
