@@ -1,10 +1,8 @@
 export const lang = {
-    english: {
-        search: "Search",
+    English: {
         gptSearchBarPlaceholder: "What would you like to watch today?"
     },
-    hindi: {
-        search: "खोज",
+    Hindi: {
         gptSearchBarPlaceholder: "आज आप क्या देखना चाहेंगे?"
     }
 }
