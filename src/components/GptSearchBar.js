@@ -20,13 +20,18 @@ const GptSearchBar = () => {
     const json = await data.json();
     console.log(json.results);
 
-    const releaseDate = movie.substring(movie.indexOf('(') + 1, movie.indexOf(')'));
-    console.log(releaseDate);
+    const releaseYear = movie.substring(movie.indexOf('(') + 1, movie.indexOf(')'));
+    console.log(releaseYear);
     //return json.results;
 
-    const res = json.results.filter((resMovie) => 
-      resMovie.release_date == releaseDate
-    );
+    const res = json.results.filter((resMovie) => {
+      const curRelYear = resMovie.release_date.substring(0, resMovie.release_date.indexOf('-'));
+      console.log("CurRelYear: "+curRelYear);
+      if (curRelYear == releaseYear) {
+        return true;
+      }
+      return false;
+    });
     console.log(res);
     
     if (res.length > 0) {
@@ -38,7 +43,7 @@ const GptSearchBar = () => {
   }
 
   const handleGptSearchClick = async () => {
-    const gptQuery = "Act as a movie recommendation system and suggest some movies for the query "+ searchText.current.value + ". Give me a list of names of just 7 comma separated movies with their respective release dates in YYYY-DD-MM format like the given example. Example: MovieName1 (YYYY-DD-MM), MovieName2 (YYYY-DD-MM), MovieName3 (YYYY-DD-MM), MovieName4 (YYYY-DD-MM), MovieName5 (YYYY-DD-MM)";
+    const gptQuery = "Act as a movie recommendation system and suggest some movies for the query "+ searchText.current.value + ". Give me a list of names of just 7 comma separated movies with their respective release years in YYYY format like the given example. Example: MovieName1 (YYYY), MovieName2 (YYYY), MovieName3 (YYYY), MovieName4 (YYYY), MovieName5 (YYYY)";
     const gptResults = await openai.chat.completions.create({
         messages: [{ role: 'user', content: gptQuery }],
         model: 'gpt-3.5-turbo',

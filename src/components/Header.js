@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
 import { Logo, SUPPORTED_LANG, UserIcon } from '../utils/constants';
-import { toggleGptSearchView } from '../utils/gptSlice';
+import { toggleGptSearchView, addGptMovieResult } from '../utils/gptSlice';
 import { changeLanguage } from '../utils/configSlice';
 
 const Header = () => {
@@ -39,6 +39,9 @@ const Header = () => {
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
+    if (!showGptSearch) {
+      dispatch(addGptMovieResult({movieNames: null, movieResults: null}));
+    }
   }
 
   const handleLangChange = (e) => {
