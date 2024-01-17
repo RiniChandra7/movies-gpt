@@ -2,6 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedMovie } from '../utils/movieSlice';
+import { IMG_CDN_URL } from '../utils/constants';
 
 const MovieModal = ({onClose}) => {
     const movie = useSelector((store) => store.movies.selectedMovie);
@@ -22,7 +23,7 @@ const MovieModal = ({onClose}) => {
                 </div>
                 <div className="p-4 w-1/2 flex justify-end">
                     <img
-                        src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+                        src={IMG_CDN_URL + movie.poster_path}
                         alt={movie.title}
                         className='w-34 h-48 object-cover float-left rounded-lg border-red-700 border-solid border-4'
                     />
