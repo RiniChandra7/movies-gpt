@@ -1,0 +1,42 @@
+// MovieModal.jsx
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedMovie } from '../utils/movieSlice';
+
+const MovieModal = ({onClose}) => {
+    const movie = useSelector((store) => store.movies.selectedMovie);
+    const dispatch = useDispatch();
+
+  if (!movie) {
+    return null;
+  }
+
+  return (
+    <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl text-black">
+            <h3 className="font-bold text-lg">{movie.title}</h3>
+            <div className='flex'>
+                <div className="w-1/2 p-4">
+                    <p><b>Release Date:</b> {movie.release_date}</p>
+                    <p><b>Overview:</b>  {movie.overview}</p>
+                </div>
+                <div className="p-4 w-1/2 flex justify-end">
+                    <img
+                        src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+                        alt={movie.title}
+                        className='w-34 h-48 object-cover float-left rounded-lg border-red-700 border-solid border-4'
+                    />
+                </div>
+            </div>
+            
+            <div className="modal-action">
+                <form method="dialog">
+                    <button className="btn mr-4 text-white bg-red-500">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+  );
+};
+
+export default MovieModal;
