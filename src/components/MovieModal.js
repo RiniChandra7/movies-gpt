@@ -1,12 +1,9 @@
-// MovieModal.jsx
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedMovie } from '../utils/movieSlice';
+import { useSelector } from 'react-redux';
 import { IMG_CDN_URL } from '../utils/constants';
 
-const MovieModal = ({onClose}) => {
-    const movie = useSelector((store) => store.movies.selectedMovie);
-    const dispatch = useDispatch();
+const MovieModal = ({movie}) => {
+  //const movie = useSelector((store) => store.movies.selectedMovie);
 
   if (!movie) {
     return null;
@@ -20,6 +17,7 @@ const MovieModal = ({onClose}) => {
                 <div className="w-1/2 p-4">
                     <p><b>Release Date:</b> {movie.release_date}</p>
                     <p><b>Overview:</b>  {movie.overview}</p>
+                    <p><b>Original Title: </b> {movie.original_title}</p>
                 </div>
                 <div className="p-4 w-1/2 flex justify-end">
                     <img

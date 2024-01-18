@@ -3,16 +3,20 @@ import MovieCard from './MovieCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedMovie } from '../utils/movieSlice';
 import MovieModal from './MovieModal'; 
+import { IMG_CDN_URL } from '../utils/constants';
 
 const MovieList = ({ title, movies }) => {
   const dispatch = useDispatch();
+  const curmovie = useSelector((store) => store.movies.selectedMovie);
 
   const handleMovieClick = (movie) => {
     console.log("Movie clicked");
     //console.log('Selected Movie Before Dispatch:', selectedMovie);
     dispatch(setSelectedMovie(movie));
   //console.log('Selected Movie After Dispatch:', selectedMovie);
-    document.getElementById('my_modal_4').showModal();
+    console.log(curmovie);
+    if (curmovie)
+      document.getElementById('my_modal_4').showModal();
   };
 
   const handleCloseModal = () => {
@@ -34,8 +38,7 @@ const MovieList = ({ title, movies }) => {
         ))}
       </div>
 
-      {/* Conditionally render the modal */}
-        <MovieModal onClose={handleCloseModal} />
+      <MovieModal movie={curmovie} />
     </div>
   );
 };

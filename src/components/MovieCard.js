@@ -1,8 +1,5 @@
 import React from 'react'
 import { IMG_CDN_URL } from '../utils/constants'
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setSelectedMovie } from '../utils/movieSlice';
 
 const MovieCard = ({posterPath, movie, onClick}) => {
   if (!posterPath) return null;

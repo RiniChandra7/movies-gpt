@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Login from './Login';
 import Browse from './Browse';
-import { useDispatch } from 'react-redux';
 
 const Body = () => {
     
