@@ -1,17 +1,19 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { lang } from '../utils/langConstants';
 import openai from '../utils/openAi';
 import { TMDB_API_OPTIONS } from '../utils/constants';
 import { addGptMovieResult } from '../utils/gptSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 
 const GptSearchBar = () => {
   const langkey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const searchMovieTMDB = async (movie) => {
     const data = await fetch(
@@ -39,20 +41,33 @@ const GptSearchBar = () => {
   }
 
   const handleGptSearchClick = async () => {
-    const gptQuery = "Act as a movie recommendation system and suggest some movies for the query "+ searchText.current.value + ". Give me a list of names of just 7 comma separated movies with their respective release years in YYYY format like the given example. Example: MovieName1 (YYYY), MovieName2 (YYYY), MovieName3 (YYYY), MovieName4 (YYYY), MovieName5 (YYYY)";
-    const gptResults = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: gptQuery }],
-        model: 'gpt-3.5-turbo',
+    try {
+      setLoading(true);
+      const gptQuery = "Act as a movie recommendation system and suggest some movies for the query "+ searchText.current.value + ". Give me a list of names of just 7 comma separated movies with their respective release years in YYYY format like the given example. Example: MovieName1 (YYYY), MovieName2 (YYYY), MovieName3 (YYYY), MovieName4 (YYYY), MovieName5 (YYYY)";
+      const gptResults = await openai.chat.completions.create({
+          messages: [{ role: 'user', content: gptQuery }],
+          model: 'gpt-3.5-turbo',
+        });
+      
+      //console.log(gptResults.choices[0]?.message.content);
+      const gptMovies = gptResults.choices[0]?.message.content.split(",");
+
+      if (Array.isArray(gptMovies)) {
+        const proms = gptMovies.map((movie) => searchMovieTMDB(movie));
+        const tmdbRes = await Promise.all(proms);
+
+        dispatch(addGptMovieResult({movieNames: gptMovies, movieResults: tmdbRes}));
+      }
+    }
+    catch(e) {
+      Swal.fire({
+        title: "GPT Error",
+        text: "An error occurred while making the OpenAI API request. Please try again later.",
+        icon: "error"
       });
-    
-    //console.log(gptResults.choices[0]?.message.content);
-    const gptMovies = gptResults.choices[0]?.message.content.split(",");
-
-    if (Array.isArray(gptMovies)) {
-      const proms = gptMovies.map((movie) => searchMovieTMDB(movie));
-      const tmdbRes = await Promise.all(proms);
-
-      dispatch(addGptMovieResult({movieNames: gptMovies, movieResults: tmdbRes}));
+    }
+    finally {
+      setLoading(false);
     }
   }
 
@@ -61,7 +76,12 @@ const GptSearchBar = () => {
         <form className='bg-black w-full md:w-1/2 grid grid-cols-12' onSubmit={(e) => e.preventDefault()}>
             <input type='text' ref={searchText} className='p-4 m-4 col-span-10' placeholder={lang[langkey].gptSearchBarPlaceholder} />
             <button className='py-2 px-4 m-4 text-white col-span-2 bg-red-600 rounded-lg' onClick={handleGptSearchClick}>
-              <FontAwesomeIcon icon={faSearch} />
+              {
+                loading ?
+                <FontAwesomeIcon icon={faSpinner} spin />
+                : <FontAwesomeIcon icon={faSearch} />
+              }
+              
             </button>
         </form>
     </div>
