@@ -33,6 +33,7 @@ const Header = () => {
 
   const handleSignout = () => {
     signOut(auth).then(() => {
+      dispatch(changeLanguage("English"));
       nav("/");
     }).catch((error) => {
       nav("/error");
