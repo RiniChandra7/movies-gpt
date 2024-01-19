@@ -18,21 +18,17 @@ const GptSearchBar = () => {
       'https://api.themoviedb.org/3/search/movie?query='+movie.substring(0, movie.indexOf('(')).trim()+'&include_adult=false&language=en-US&page=1', TMDB_API_OPTIONS);
 
     const json = await data.json();
-    console.log(json.results);
+    //console.log(json.results);
 
     const releaseYear = movie.substring(movie.indexOf('(') + 1, movie.indexOf(')'));
-    console.log(releaseYear);
-    //return json.results;
 
     const res = json.results.filter((resMovie) => {
       const curRelYear = resMovie.release_date.substring(0, resMovie.release_date.indexOf('-'));
-      console.log("CurRelYear: "+curRelYear);
       if (curRelYear == releaseYear) {
         return true;
       }
       return false;
     });
-    console.log(res);
     
     if (res.length > 0) {
       return res[0];
@@ -49,14 +45,12 @@ const GptSearchBar = () => {
         model: 'gpt-3.5-turbo',
       });
     
-    console.log(gptResults.choices[0]?.message.content);
+    //console.log(gptResults.choices[0]?.message.content);
     const gptMovies = gptResults.choices[0]?.message.content.split(",");
-    console.log(gptMovies);
 
     if (Array.isArray(gptMovies)) {
       const proms = gptMovies.map((movie) => searchMovieTMDB(movie));
       const tmdbRes = await Promise.all(proms);
-      console.log(tmdbRes);
 
       dispatch(addGptMovieResult({movieNames: gptMovies, movieResults: tmdbRes}));
     }

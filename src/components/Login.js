@@ -26,7 +26,6 @@ const Login = () => {
     else {
       msg = validateData(null, email.current.value, pwd.current.value);
     }
-    console.log(msg);
     setErrMsg(msg);
 
     if (msg) return;
@@ -56,7 +55,6 @@ const Login = () => {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        console.log(user);
         nav("/browse");
         // ...
       })

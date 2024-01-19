@@ -10,11 +10,7 @@ const MovieList = ({ title, movies }) => {
   const curmovie = useSelector((store) => store.movies.selectedMovie);
 
   const handleMovieClick = (movie) => {
-    console.log("Movie clicked");
-    //console.log('Selected Movie Before Dispatch:', selectedMovie);
     dispatch(setSelectedMovie(movie));
-  //console.log('Selected Movie After Dispatch:', selectedMovie);
-    console.log(curmovie);
     if (curmovie)
       document.getElementById('my_modal_4').showModal();
   };

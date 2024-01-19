@@ -11,11 +11,7 @@ const VideoTitle = ({movie}) => {
   const dispatch = useDispatch();
 
   const handleMovieClick = () => {
-    console.log("Movie clicked");
-    //console.log('Selected Movie Before Dispatch:', selectedMovie);
     dispatch(setSelectedMovie(movie));
-  //console.log('Selected Movie After Dispatch:', selectedMovie);
-    console.log(curmovie);
     if (curmovie)
       document.getElementById('my_modal_4').showModal();
   };
