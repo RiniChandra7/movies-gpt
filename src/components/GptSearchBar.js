@@ -53,11 +53,13 @@ const GptSearchBar = () => {
     const gptMovies = gptResults.choices[0]?.message.content.split(",");
     console.log(gptMovies);
 
-    const proms = gptMovies.map((movie) => searchMovieTMDB(movie));
-    const tmdbRes = await Promise.all(proms);
-    console.log(tmdbRes);
+    if (Array.isArray(gptMovies)) {
+      const proms = gptMovies.map((movie) => searchMovieTMDB(movie));
+      const tmdbRes = await Promise.all(proms);
+      console.log(tmdbRes);
 
-    dispatch(addGptMovieResult({movieNames: gptMovies, movieResults: tmdbRes}));
+      dispatch(addGptMovieResult({movieNames: gptMovies, movieResults: tmdbRes}));
+    }
   }
 
   return (
