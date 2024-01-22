@@ -4,7 +4,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
-import { Logo, SUPPORTED_LANG, UserIcon } from '../utils/constants';
+import { SUPPORTED_LANG, UserIcon } from '../utils/constants';
 import { toggleGptSearchView, addGptMovieResult } from '../utils/gptSlice';
 import { changeLanguage } from '../utils/configSlice';
 import { lang } from '../utils/langConstants';

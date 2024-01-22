@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MovieCard from './MovieCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedMovie } from '../utils/movieSlice';
 import MovieModal from './MovieModal'; 
-import { IMG_CDN_URL } from '../utils/constants';
 
 const MovieList = ({ title, movies }) => {
   const dispatch = useDispatch();
@@ -13,10 +12,6 @@ const MovieList = ({ title, movies }) => {
     dispatch(setSelectedMovie(movie));
     if (curmovie)
       document.getElementById('my_modal_4').showModal();
-  };
-
-  const handleCloseModal = () => {
-    dispatch(setSelectedMovie(null));
   };
 
   return (

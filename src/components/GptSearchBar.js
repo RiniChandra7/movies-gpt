@@ -75,7 +75,7 @@ const GptSearchBar = () => {
     <div className='pt-[40%] md:pt-[10%] justify-center flex'>
         <form className='bg-black w-full md:w-1/2 grid grid-cols-12' onSubmit={(e) => e.preventDefault()}>
             <input type='text' ref={searchText} className='p-4 m-4 col-span-10' placeholder={lang[langkey].gptSearchBarPlaceholder} />
-            <button className='py-2 px-4 m-4 text-white col-span-2 bg-red-600 rounded-lg' onClick={handleGptSearchClick}>
+            <button className='py-2 px-4 m-4 text-white col-span-2 bg-red-600 rounded-lg' onClick={handleGptSearchClick} disabled={loading}>
               {
                 loading ?
                 <FontAwesomeIcon icon={faSpinner} spin />
